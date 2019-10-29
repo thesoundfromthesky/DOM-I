@@ -46,12 +46,69 @@ const siteContent = {
 let logo = document.getElementById("logo-img");
 logo.setAttribute("src", siteContent["nav"]["img-src"]);
 
-// ## Task 1: Create selectors to point your data into elements
-// * [ ] Create selectors by using any of the DOM element's methods
-// * [ ] Note that IDs have been used on all images.  Use the IDs to update src path content
+const ctaImg = document.getElementById("cta-img");
+ctaImg.setAttribute("src", siteContent["cta"]["img-src"]);
 
-let cta = document.getElementById("cta-img");
-cta.setAttribute("src", siteContent["cta"]["img-src"]);
+const middleImg = document.getElementById("middle-img");
+middleImg.setAttribute("src", siteContent["main-content"]["middle-img-src"]);
 
-let middle = document.getElementById("middle-img");
-middle.setAttribute("src", siteContent["main-content"]["middle-img-src"]);
+// Nav Items
+const [nav] = document.getElementsByTagName("nav");
+const navItems = Array.from(nav.children);
+
+navItems.forEach((e, i) => {
+  e.textContent = siteContent["nav"][`nav-item-${i + 1}`];
+  e.style.color = "green";
+});
+
+const item1 = document.createElement("a");
+item1.textContent = "Home";
+item1.style.color = "green";
+
+const item2 = document.createElement("a");
+item2.textContent = "Town";
+item2.style.color = "green";
+
+nav.prepend(item1);
+nav.appendChild(item2);
+
+// CTA text
+const [ctaText] = document.getElementsByClassName("cta-text");
+
+ctaText.children[0].style.wordSpacing = "200vw";
+ctaText.children[0].textContent = siteContent["cta"].h1;
+ctaText.children[1].textContent = siteContent["cta"].button;
+
+// Top Content
+const [topContent] = document.getElementsByClassName("top-content");
+
+// Bottom Content
+const [bottomContent] = document.getElementsByClassName("bottom-content");
+const mainContent = [...topContent.children, ...bottomContent.children];
+
+// injecting view model into elements
+const content = Object.values(siteContent["main-content"]);
+content.splice(4, 1);
+mainContent.forEach((e, i) => {
+  Array.from(e.children).forEach((e, j) => {
+    e.textContent = content[i * 2 + j];
+  });
+});
+
+//Contact 
+const textNode = document.createTextNode("123 Way 456 Street");
+const brTag = document.createElement("br");
+const textNode2 = document.createTextNode("Somewhere, USA");
+
+let contactText = document.getElementsByClassName("contact");
+contactText[0].children[0].textContent = siteContent["contact"]["contact-h4"]
+contactText[0].children[1].appendChild(textNode);
+contactText[0].children[1].appendChild(brTag);
+contactText[0].children[1].appendChild(textNode2);
+contactText[0].children[2].textContent = siteContent["contact"]["phone"]
+contactText[0].children[3].textContent = siteContent["contact"]["email"]
+
+// Footer
+
+let footerText = document.getElementsByTagName("footer");
+footerText[0].textContent = siteContent["footer"]["copyright"];
